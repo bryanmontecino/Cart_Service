@@ -34,7 +34,7 @@ def add_to_cart(user_id, product_id):
     quantity = data.get("quantity", 1)  # Default to adding 1 item
 
     # Make an HTTP GET request to the Product Service to fetch product details
-    product_response = requests.get(product_service/products/{product_id}')
+    product_response = requests.get(f'{product_service}/products/{product_id}')
 
     if product_response.status_code == 200:
         product_data = product_response.json()
