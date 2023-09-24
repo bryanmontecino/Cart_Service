@@ -1,8 +1,12 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 import requests
+import os
 
 app = Flask(__name__)
+
+# Get the Product Service URL from the environment variable
+product_service_url = os.environ.get("https://product-service-c4f6.onrender.com")
 
 # Configuration for SQLite database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///kachowcarts.db'  # SQLite database file name
@@ -34,7 +38,7 @@ def add_to_cart(user_id, product_id):
     quantity = data.get("quantity", 1)  # Default to adding 1 item
 
     # Make an HTTP GET request to the Product Service to fetch product details
-    product_response = requests.get(f'http://product-service-url/products/{product_id}')
+    product_response = requests.get(f'{product_service_url}/products/{product_id}')
 
     if product_response.status_code == 200:
         product_data = product_response.json()
