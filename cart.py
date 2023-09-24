@@ -6,7 +6,8 @@ import os
 app = Flask(__name__)
 
 # Get the Product Service URL from the environment variable
-product_service_url = os.environ.get("https://product-service-c4f6.onrender.com")
+product_service_url = os.environ.get(https://product-service-c4f6.onrender.com)
+
 
 # Configuration for SQLite database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///kachowcarts.db'  # SQLite database file name
