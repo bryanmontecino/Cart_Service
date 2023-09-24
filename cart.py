@@ -72,5 +72,5 @@ def remove_from_cart(user_id, product_id):
     return jsonify({'message': 'Product not found in cart'}), 404
 
 if __name__ == '__main__':
-    #db.create_all()
+    db.create_all()
     app.run(host='127.0.0.1', port=5001)
