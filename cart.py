@@ -1,3 +1,16 @@
+"""
+Author: Bryan Montecino
+File: cart.py
+Date: September 24, 2023
+Assignment: REST APIs
+Objective: 
+The objective of this assignment is to create a microservices application for grocery shopping.
+Developed two Flask microservices, ”Product Service” and ”Cart Service,” with specific endpoints.
+Deployed both services on the Render platform. 
+Benefits:
+This assignment helped me gain practical experience in microservices architecture, API development with Flask, and cloud deployment
+"""
+
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 import requests
@@ -5,16 +18,17 @@ import requests
 app = Flask(__name__)
 
 # Configuration for SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///kachowcarts.db'  # SQLite database file name
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///kachowcarts.db'
 db = SQLAlchemy(app)
 
-# Define a Cart model
+# Define Cart
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
     product_id = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
 
+# Endpoint to retrieve a cart, along with information for each item
 @app.route('/cart/<int:user_id>', methods=['GET'])
 def get_cart(user_id):
     user_cart = Cart.query.filter_by(user_id=user_id).all()
@@ -28,6 +42,7 @@ def get_cart(user_id):
         })
     return jsonify(cart_items)
 
+# Endpoint to add items to a cart, communicating with the Product Service
 @app.route('/cart/<int:user_id>/add/<int:product_id>', methods=['POST'])
 def add_to_cart(user_id, product_id):
     data = request.get_json()
@@ -55,6 +70,7 @@ def add_to_cart(user_id, product_id):
     else:
         return jsonify({'message': 'Product not found'}), 404
 
+# Endpoint to remove item(s) from a cart
 @app.route('/cart/<int:user_id>/remove/<int:product_id>', methods=['POST'])
 def remove_from_cart(user_id, product_id):
     data = request.get_json()
