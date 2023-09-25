@@ -33,9 +33,8 @@ def add_to_cart(user_id, product_id):
     data = request.get_json()
     quantity = data.get("quantity", 1)  # Default to adding 1 item
 
-    # Directly use the Product Service URL in the GET request
-    product_service_url = f'https://product-service-c4f6.onrender.com'
-    product_response = requests.get(f'{product_service_url}/products/{product_id}')
+    # Make an HTTP GET request to the Product Service to fetch product details
+    product_response = requests.get(f’https://product-service-c4f6.onrender.com/products/{product_id}')
 
     if product_response.status_code == 200:
         product_data = product_response.json()
